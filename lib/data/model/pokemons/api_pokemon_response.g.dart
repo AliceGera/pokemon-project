@@ -11,11 +11,15 @@ ApiPokemonResponse _$ApiPokemonResponseFromJson(Map<String, dynamic> json) =>
       (json['results'] as List<dynamic>?)
           ?.map((e) => ApiPokemonItem.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['offset'] as int?,
+      json['limit'] as int?,
     );
 
 Map<String, dynamic> _$ApiPokemonResponseToJson(ApiPokemonResponse instance) =>
     <String, dynamic>{
       'results': instance.results?.map((e) => e.toJson()).toList(),
+      'offset': instance.offset,
+      'limit': instance.limit,
     };
 
 ApiPokemonItem _$ApiPokemonItemFromJson(Map<String, dynamic> json) =>

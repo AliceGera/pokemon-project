@@ -7,6 +7,7 @@ abstract class PokemonViewMapper {
   void toScreenData(
     PokemonData data,
     PokemonScreenData screenData,
+    bool isFirstLoading,
   );
 
   PokemonData toDomainModelData(PokemonScreenData screenData);
@@ -17,6 +18,7 @@ class _PokemonViewMapper implements PokemonViewMapper {
   void toScreenData(
     PokemonData data,
     PokemonScreenData screenData,
+    bool isFirstLoading,
   ) {
     final pokemonList = data.pokemonList
         ?.map(
@@ -26,7 +28,15 @@ class _PokemonViewMapper implements PokemonViewMapper {
           ),
         )
         .toList();
-    screenData.itemList = pokemonList ?? [];
+    /*screenData.itemList = pokemonList ?? [];*/
+    if ((pokemonList?.length ?? 0) >= 20) {
+      screenData.isHasNext = true;
+      if (isFirstLoading) {
+        screenData.itemList = pokemonList ?? [];
+      } else {
+        screenData.itemList += pokemonList ?? [];
+      }
+    }
   }
 
   @override

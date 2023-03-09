@@ -5,8 +5,10 @@ class PokemonInteractor  {
   final IPokemonRepository pokemonRepository;
 
   PokemonInteractor(this.pokemonRepository);
-
-  Future<PokemonData> getPokemon() {
+  /*Future<void> sendPokemon(PokemonData data) {
+    return pokemonRepository.sendPokemon(data);
+  }*/
+  Future<PokemonData> getPokemon(int offset, int limit) {
     return pokemonRepository.getPokemon();
   }
 

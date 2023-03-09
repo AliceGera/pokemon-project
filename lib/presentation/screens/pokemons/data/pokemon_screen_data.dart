@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
+
 class PokemonScreenData {
   List<PokemonScreenItem> itemList;
   int offset;
   bool isLoadMore;
   bool isHasNext;
   int limit;
+
 
   PokemonScreenData(
     this.itemList,

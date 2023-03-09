@@ -1,22 +1,11 @@
-/*
-import 'package:json_annotation/json_annotation.dart';
-part 'api_pokemon_request.g.dart';
-
-@JsonSerializable(explicitToJson: true)
 class ApiPokemonRequest {
-  @JsonKey(name: 'results')
-  final ApiPokemonItem? results;
-
+  final int? offset;
+  final int? limit;
 
   ApiPokemonRequest({
-    this.results,
+    this.offset,
+    this.limit,
   });
 
-  factory ApiPokemonRequest.fromJson(
-      Map<String, dynamic> json,
-      ) =>
-      _$ApiPokemonRequestFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ApiPokemonRequestToJson(this);
+  String get toQueryParametersString => 'offset=$offset&limit=$limit';
 }
-*/

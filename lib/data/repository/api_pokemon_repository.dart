@@ -1,4 +1,3 @@
-
 import '../../domain/model/pokemon_data.dart';
 import '../../domain/repository/pokemon_repository.dart';
 import '../api/api_client.dart';
@@ -16,14 +15,20 @@ class ApiPokemonRepository implements IPokemonRepository {
 
   @override
   Future<PokemonData> getPokemon() async {
-
+    final apiPokemonRequest =  pokemonMapper.toApiPokemonRequest(PokemonData());
     final response=await httpRequestExecutor.executeRequest(
       HttpMethod.get,
-      Uri.parse("https://pokeapi.co/api/v2/pokemon"),
+      Uri.parse("https://pokeapi.co/api/v2/pokemon?${apiPokemonRequest.toQueryParametersString}"),
       null,
     );
     final mappedResponse = ApiPokemonResponse.fromJson(response);
     final pokemonData = pokemonMapper.toPokemonData(mappedResponse);
     return pokemonData;
   }
+
+ /* @override
+  Future<PokemonData> sendPokemon(PokemonData data) {
+    // TODO: implement sendPokemon
+    throw UnimplementedError();
+  }*/
 }

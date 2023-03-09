@@ -5,9 +5,14 @@ part 'api_pokemon_response.g.dart';
 class ApiPokemonResponse {
   @JsonKey(name: 'results')
   final List<ApiPokemonItem>? results;
-
+  @JsonKey(name: 'offset')
+  final int? offset;
+  @JsonKey(name: 'limit')
+  final int? limit;
   ApiPokemonResponse(
     this.results,
+      this.offset,
+      this.limit,
   );
 
   factory ApiPokemonResponse.fromJson(
@@ -20,7 +25,6 @@ class ApiPokemonResponse {
 
 @JsonSerializable(explicitToJson: true)
 class ApiPokemonItem {
-  // 3 поля
 
   @JsonKey(name: 'name')
   final String? name;

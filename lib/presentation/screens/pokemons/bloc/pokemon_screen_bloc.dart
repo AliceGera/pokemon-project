@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import '../../../../domain/interactor/pokemon_interactor.dart';
 import '../data/pokemon_screen_data.dart';
@@ -12,20 +13,92 @@ part 'pokemon_screen_state.dart';
 class PokemonScreenBloc extends Bloc<PokemonScreenEvent, PokemonScreenState> {
   final PokemonInteractor interactor;
   final PokemonViewMapper viewMapper;
-  late PokemonScreenData screenData;
+  PokemonScreenData screenData = PokemonScreenData(
+    [
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+      PokemonScreenItem('name', 'url'),
+    ],
+    0,
+  );
 
   PokemonScreenBloc(
     this.interactor,
     this.viewMapper,
   ) : super(PokemonScreenInitialState()) {
-    on<LoadPokemonScreenEvent>((event, emit) async {
-      emit(PokemonScreenLoadingState());
+    on<LoadMorePokemonsScreenEvent>((event, emit) async {
       try {
-        final data = await interactor.getPokemon();
-        viewMapper.toScreenData(
-          data,
-          screenData,
-        );
+        if (event.isFirstLoading) {
+          emit(PokemonScreenLoadingState());
+          /* final data = await interactor.getPokemon(screenData.offset,screenData.limit);
+          viewMapper.toScreenData(
+              data,
+              screenData,
+              event.isFirstLoading,
+            );*/
+          //_controller = ScrollController()..addListener(screenData);
+          emit(PokemonScreenSuccessState(screenData));
+        } else if (screenData.isLoadMore && screenData.isHasNext) {
+          try {
+            emit(PokemonScreenSuccessState(screenData));
+          } catch (error) {
+            emit(PokemonScreenFailedState(error));
+          }
+        }
         emit(PokemonScreenSuccessState(screenData));
       } catch (error) {
         emit(PokemonScreenFailedState(error));

@@ -15,17 +15,36 @@ class PokemonScreen extends StatefulWidget {
 }
 
 class _PokemonScreenState extends State<PokemonScreen> {
+  final ScrollController _controller = ScrollController();
 
-  int _page = 0;final int _limit = 20;
-  bool _hasNextPage = true;
-  bool _isFirstLoadRunning = false;
-  bool _isLoadMoreRunning = false;
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void setupScrollController(BuildContext context) {
+    _controller.addListener(() {
+      print(11111);
+      if (_controller.position.extentAfter < 300) {
+        BlocProvider.of<PokemonScreenBloc>(context).add(
+          LoadMorePokemonsScreenEvent(),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.I.get<PokemonScreenBloc>()..add(LoadPokemonScreenEvent()),
+      create: (context) => GetIt.I.get<PokemonScreenBloc>()
+        ..add(
+          LoadMorePokemonsScreenEvent(true),
+        ),
       child: BlocBuilder<PokemonScreenBloc, PokemonScreenState>(
         builder: (context, state) {
+          if (state is PokemonScreenInitialState) {
+            setupScrollController(context);
+          }
           if (state is PokemonScreenLoadingState || state is PokemonScreenInitialState) {
             return const CircularProgressIndicatorWidget();
           } else if (state is PokemonScreenFailedState) {
@@ -39,22 +58,24 @@ class _PokemonScreenState extends State<PokemonScreen> {
                 child: Scaffold(
                   backgroundColor: const Color(0xFFFCFCFC),
                   appBar: AppBar(
-                    // iconTheme: const IconThemeData(color: Colors.black),
                     backgroundColor: const Color(0xFFFCFCFC),
                     centerTitle: true,
                     elevation: 0,
                   ),
-                  body: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children:  [
-                          Text(
-                            state.data.itemList[1].name,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ],
+                  body: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ListView.builder(
+                      controller: _controller,
+                      itemCount: state.data.itemList.length,
+                      itemBuilder: (_, index) => Card(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 10,
+                        ),
+                        child: Text(
+                          state.data.itemList[index].name,
+                          style: const TextStyle(fontSize: 22),
+                        ),
                       ),
                     ),
                   ),
