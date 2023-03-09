@@ -35,6 +35,7 @@ class _PokemonScreenState extends State<PokemonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => GetIt.I.get<PokemonScreenBloc>()
         ..add(
@@ -62,22 +63,38 @@ class _PokemonScreenState extends State<PokemonScreen> {
                     centerTitle: true,
                     elevation: 0,
                   ),
-                  body: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: ListView.builder(
-                      controller: _controller,
-                      itemCount: state.data.itemList.length,
-                      itemBuilder: (_, index) => Card(
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 10,
-                        ),
-                        child: Text(
-                          state.data.itemList[index].name,
-                          style: const TextStyle(fontSize: 22),
+                  body: Column(
+                    children: [
+                      const Text(
+                        'List of pokemons',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
                         ),
                       ),
-                    ),
+                  SizedBox(
+                    height: size.height * 0.04),
+                      SizedBox(
+                        height: size.height * 0.8,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.builder(
+                            controller: _controller,
+                            itemCount: state.data.itemList.length,
+                            itemBuilder: (_, index) => Card(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 10,
+                              ),
+                              child: Text(
+                                state.data.itemList[index].name,
+                                style: const TextStyle(fontSize: 22),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

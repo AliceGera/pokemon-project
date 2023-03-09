@@ -13,69 +13,8 @@ part 'pokemon_screen_state.dart';
 class PokemonScreenBloc extends Bloc<PokemonScreenEvent, PokemonScreenState> {
   final PokemonInteractor interactor;
   final PokemonViewMapper viewMapper;
-  PokemonScreenData screenData = PokemonScreenData(
-    [
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-      PokemonScreenItem('name', 'url'),
-    ],
-    0,
-  );
 
+  PokemonScreenData screenData = PokemonScreenData([], 0);
   PokemonScreenBloc(
     this.interactor,
     this.viewMapper,
@@ -84,13 +23,12 @@ class PokemonScreenBloc extends Bloc<PokemonScreenEvent, PokemonScreenState> {
       try {
         if (event.isFirstLoading) {
           emit(PokemonScreenLoadingState());
-          /* final data = await interactor.getPokemon(screenData.offset,screenData.limit);
+          final data = await interactor.getPokemon(screenData.offset, screenData.limit);
           viewMapper.toScreenData(
-              data,
-              screenData,
-              event.isFirstLoading,
-            );*/
-          //_controller = ScrollController()..addListener(screenData);
+            data,
+            screenData,
+            event.isFirstLoading,
+          );
           emit(PokemonScreenSuccessState(screenData));
         } else if (screenData.isLoadMore && screenData.isHasNext) {
           try {
