@@ -9,14 +9,14 @@ class ApiPokemonRepository implements IPokemonRepository {
   final IPokemonMapper pokemonMapper;
 
   ApiPokemonRepository(
-      this.httpRequestExecutor,
-      this.pokemonMapper,
-      );
+    this.httpRequestExecutor,
+    this.pokemonMapper,
+  );
 
   @override
-  Future<PokemonData> getPokemon() async {
-    final apiPokemonRequest =  pokemonMapper.toApiPokemonRequest(PokemonData());
-    final response=await httpRequestExecutor.executeRequest(
+  Future<PokemonData> getPokemon(PokemonData pokemonDomainData) async {
+    final apiPokemonRequest = pokemonMapper.toApiPokemonRequest(pokemonDomainData);
+    final response = await httpRequestExecutor.executeRequest(
       HttpMethod.get,
       Uri.parse("https://pokeapi.co/api/v2/pokemon?${apiPokemonRequest.toQueryParametersString}"),
       null,
@@ -26,7 +26,7 @@ class ApiPokemonRepository implements IPokemonRepository {
     return pokemonData;
   }
 
- /* @override
+/* @override
   Future<PokemonData> sendPokemon(PokemonData data) {
     // TODO: implement sendPokemon
     throw UnimplementedError();

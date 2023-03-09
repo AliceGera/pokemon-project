@@ -24,7 +24,6 @@ class _PokemonScreenState extends State<PokemonScreen> {
 
   void setupScrollController(BuildContext context) {
     _controller.addListener(() {
-      print(11111);
       if (_controller.position.extentAfter < 300) {
         BlocProvider.of<PokemonScreenBloc>(context).add(
           LoadMorePokemonsScreenEvent(),
@@ -57,44 +56,80 @@ class _PokemonScreenState extends State<PokemonScreen> {
               },
               child: SafeArea(
                 child: Scaffold(
-                  backgroundColor: const Color(0xFFFCFCFC),
-                  appBar: AppBar(
-                    backgroundColor: const Color(0xFFFCFCFC),
-                    centerTitle: true,
-                    elevation: 0,
-                  ),
-                  body: Column(
-                    children: [
-                      const Text(
-                        'List of pokemons',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 22,
-                        ),
+                  body: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Colors.blue,
+                          Colors.red,
+                        ],
                       ),
-                  SizedBox(
-                    height: size.height * 0.04),
-                      SizedBox(
-                        height: size.height * 0.8,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView.builder(
-                            controller: _controller,
-                            itemCount: state.data.itemList.length,
-                            itemBuilder: (_, index) => Card(
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 10,
-                              ),
-                              child: Text(
-                                state.data.itemList[index].name,
-                                style: const TextStyle(fontSize: 22),
-                              ),
+                    ),
+                  /*  child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(28.0),
+                          child: Text(
+                            'List of pokemons',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: size.height * 0.02),*/
+                        child:Column(
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                controller: _controller,
+                                itemCount: state.data.itemList.length,
+                                itemBuilder: (_, index) => Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 8,
+                                    horizontal: 10,
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        state.data.itemList[index].name,
+                                        style: const TextStyle(fontSize: 26),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if (state.data.isLoadMore == true)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 10, bottom: 40),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            if (state.data.isHasNext == false)
+                              Container(
+                                padding: const EdgeInsets.only(top: 30, bottom: 40),
+                                color: Colors.amber,
+                                child: const Center(
+                                  child: Text('You have fetched all of the content'),
+                                ),
+                              ),
+                          ],
+                        ),
+
+
+                     // ],
+                   // ),
                   ),
                 ),
               ),

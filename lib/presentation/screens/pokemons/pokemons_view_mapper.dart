@@ -33,9 +33,14 @@ class _PokemonViewMapper implements PokemonViewMapper {
       screenData.isHasNext = true;
       if (isFirstLoading) {
         screenData.itemList = pokemonList ?? [];
+        screenData.offset = 20;
       } else {
+        screenData.offset += 20;
         screenData.itemList += pokemonList ?? [];
       }
+    } else {
+      screenData.isHasNext = false;
+      screenData.isLoadMore = false;
     }
   }
 

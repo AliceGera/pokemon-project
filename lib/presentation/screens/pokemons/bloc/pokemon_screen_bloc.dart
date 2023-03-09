@@ -13,31 +13,43 @@ part 'pokemon_screen_state.dart';
 class PokemonScreenBloc extends Bloc<PokemonScreenEvent, PokemonScreenState> {
   final PokemonInteractor interactor;
   final PokemonViewMapper viewMapper;
-
   PokemonScreenData screenData = PokemonScreenData([], 0);
+ // PokemonScreenData offset;
   PokemonScreenBloc(
     this.interactor,
     this.viewMapper,
+
   ) : super(PokemonScreenInitialState()) {
     on<LoadMorePokemonsScreenEvent>((event, emit) async {
       try {
         if (event.isFirstLoading) {
           emit(PokemonScreenLoadingState());
-          final data = await interactor.getPokemon(screenData.offset, screenData.limit);
+          final pokemonData = viewMapper.toDomainModelData(screenData);
+          final data = await interactor.getPokemon(pokemonData);
           viewMapper.toScreenData(
-            data,
-            screenData,
-            event.isFirstLoading,
-          );
+              data,
+              screenData,
+              event.isFirstLoading,
+            );
           emit(PokemonScreenSuccessState(screenData));
-        } else if (screenData.isLoadMore && screenData.isHasNext) {
+        } else if (!screenData.isLoadMore && screenData.isHasNext) {
+          screenData.isLoadMore = true;
+          emit(PokemonScreenSuccessState(screenData));
           try {
+            final pokemonData = viewMapper.toDomainModelData(screenData);
+            final data = await interactor.getPokemon(pokemonData);
+            viewMapper.toScreenData(
+              data,
+              screenData,
+              event.isFirstLoading,
+            );
+            screenData.isLoadMore = false;
             emit(PokemonScreenSuccessState(screenData));
           } catch (error) {
+            screenData.isLoadMore = false;
             emit(PokemonScreenFailedState(error));
           }
         }
-        emit(PokemonScreenSuccessState(screenData));
       } catch (error) {
         emit(PokemonScreenFailedState(error));
       }
