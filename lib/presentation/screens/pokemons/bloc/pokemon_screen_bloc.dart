@@ -14,7 +14,6 @@ class PokemonScreenBloc extends Bloc<PokemonScreenEvent, PokemonScreenState> {
   final PokemonInteractor interactor;
   final PokemonViewMapper viewMapper;
   PokemonScreenData screenData = PokemonScreenData([], 0);
- // PokemonScreenData offset;
   PokemonScreenBloc(
     this.interactor,
     this.viewMapper,

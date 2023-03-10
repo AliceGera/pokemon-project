@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import '../model/pokemons/no_internet_exception.dart';
+import '../model/no_internet_exception.dart';
 import 'api_exseption.dart';
 
 enum HttpMethod { get, post, put, delete }

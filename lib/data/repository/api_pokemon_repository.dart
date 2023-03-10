@@ -25,10 +25,4 @@ class ApiPokemonRepository implements IPokemonRepository {
     final pokemonData = pokemonMapper.toPokemonData(mappedResponse);
     return pokemonData;
   }
-
-/* @override
-  Future<PokemonData> sendPokemon(PokemonData data) {
-    // TODO: implement sendPokemon
-    throw UnimplementedError();
-  }*/
 }
