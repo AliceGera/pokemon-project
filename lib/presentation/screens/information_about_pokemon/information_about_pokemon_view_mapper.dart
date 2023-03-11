@@ -1,12 +1,15 @@
 import '../../../domain/model/information_about_pokemon_data.dart';
-import 'data/information_about_pokemon_data.dart';
+import 'data/information_about_pokemon_screen_data.dart';
 
 abstract class InformationAboutPokemonViewMapper {
   factory InformationAboutPokemonViewMapper() => _InformationAboutPokemonViewMapper();
 
   void toScreenData(
     InformationAboutPokemonScreenData screenData,
+    InformationAboutPokemonData data,
+
   );
+
   InformationAboutPokemonData toDomainModelData(InformationAboutPokemonScreenData screenData);
 }
 
@@ -14,13 +17,14 @@ class _InformationAboutPokemonViewMapper implements InformationAboutPokemonViewM
   @override
   void toScreenData(
     InformationAboutPokemonScreenData screenData,
+    InformationAboutPokemonData data,
+
   ) {
-    name:
-    screenData.name ?? '';
-    height:
-    screenData.height ?? 0;
-    weight:
-    screenData.weight ?? 0;
+
+    screenData.name = data.name ?? '';
+    screenData.height = data.height ?? 0;
+    screenData.weight = data.weight ?? 0;
+    screenData.imagePokemon = data.image ?? '';
   }
 
   @override

@@ -8,7 +8,7 @@ class InformationAboutPokemonScreenInitialState extends InformationAboutPokemonS
 class InformationAboutPokemonScreenLoadingState extends InformationAboutPokemonScreenState {}
 
 class InformationAboutPokemonScreenSuccessState extends InformationAboutPokemonScreenState {
-  final InformationAboutPokemonData data;
+  final InformationAboutPokemonScreenData data;
   InformationAboutPokemonScreenSuccessState(this.data);
 }
 

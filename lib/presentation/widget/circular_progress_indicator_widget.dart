@@ -5,8 +5,18 @@ class CircularProgressIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      decoration: const BoxDecoration(color: Colors.white),
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.blue,
+            Colors.red,
+          ],
+        ),
+      ),
       child: const Center(
         child: CircularProgressIndicator(color: Colors.blue),
       ),

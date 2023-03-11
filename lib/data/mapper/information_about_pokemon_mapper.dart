@@ -20,12 +20,12 @@ class _IInformationAboutPokemonMapper implements IInformationAboutPokemonMapper 
 
   @override
   InformationAboutPokemonData toInformationAboutPokemonData(ApiInformationAboutPokemonResponse data) {
-    name:
-    data.name;
-    weight:
-    data.weight;
-    height:
-    data.height;
-    return InformationAboutPokemonData(name: data.name, weight: data.weight, height: data.height);
+    return InformationAboutPokemonData(
+      name: data.name,
+      weight: data.weight,
+      height: data.height,
+      image: data.imagePokemon?.image,
+      types: data.types?.map((e) => e.name ?? '').toList(),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../../widget/circular_progress_indicator_widget.dart';
 import '../../widget/failed_widget.dart';
 import 'bloc/information_about_pokemon_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class InformationAboutPokemonScreen extends StatefulWidget {
   static const routeName = '/information_about_pokemon';
@@ -24,6 +25,7 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
 
   @override
   Widget build(BuildContext context) {
+    CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
     final size = MediaQuery.of(context).size;
     url = ModalRoute.of(context)?.settings.arguments as String?;
     return BlocProvider(
@@ -57,22 +59,55 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                     child: Column(
                       children: [
                         SizedBox(height: size.height * 0.05),
-                        Text(
-                          "name: ${state.data.name.toString()}",
-                          style: const TextStyle(
+                        const Text(
+                          "The pokemon",
+                          style: TextStyle(
                             color: Colors.white,
+                            fontSize: 44,
                           ),
                         ),
                         Text(
-                          "weight: ${state.data.weight}",
+                          state.data.name.toString(),
                           style: const TextStyle(
                             color: Colors.white,
+                            fontSize: 44,
                           ),
                         ),
-                        Text(
-                          "height: ${state.data.height}",
-                          style: const TextStyle(
-                            color: Colors.white,
+                        SizedBox(
+                          height: size.height * 0.7,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Column(
+                              children: [
+                                CachedNetworkImage(
+                                  height: size.height * 0.3,
+                                  fit: BoxFit.fitHeight,
+                                  imageUrl: state.data.imagePokemon,
+                                  progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                      ),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) => const Icon(
+                                    Icons.error,
+                                  ),
+                                ),
+                                Text(
+                                  "weight: ${state.data.weight}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "height: ${state.data.height}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

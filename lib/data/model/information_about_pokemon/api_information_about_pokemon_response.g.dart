@@ -12,6 +12,12 @@ ApiInformationAboutPokemonResponse _$ApiInformationAboutPokemonResponseFromJson(
       json['name'] as String?,
       json['weight'] as int?,
       json['height'] as int?,
+      json['sprites'] == null
+          ? null
+          : ImagePokemon.fromJson(json['sprites'] as Map<String, dynamic>),
+      (json['types'] as List<dynamic>?)
+          ?.map((e) => PokemonType.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ApiInformationAboutPokemonResponseToJson(
@@ -20,4 +26,24 @@ Map<String, dynamic> _$ApiInformationAboutPokemonResponseToJson(
       'name': instance.name,
       'weight': instance.weight,
       'height': instance.height,
+      'sprites': instance.imagePokemon?.toJson(),
+      'types': instance.types?.map((e) => e.toJson()).toList(),
+    };
+
+ImagePokemon _$ImagePokemonFromJson(Map<String, dynamic> json) => ImagePokemon(
+      json['front_shiny'] as String?,
+    );
+
+Map<String, dynamic> _$ImagePokemonToJson(ImagePokemon instance) =>
+    <String, dynamic>{
+      'front_shiny': instance.image,
+    };
+
+PokemonType _$PokemonTypeFromJson(Map<String, dynamic> json) => PokemonType(
+      json['type'] as String?,
+    );
+
+Map<String, dynamic> _$PokemonTypeToJson(PokemonType instance) =>
+    <String, dynamic>{
+      'type': instance.name,
     };
