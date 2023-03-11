@@ -57,20 +57,20 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                     child: Column(
                       children: [
                         SizedBox(height: size.height * 0.05),
-                       Text(
-                          state.data.name.toString(),
+                        Text(
+                          "name: ${state.data.name.toString()}",
                           style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
                         Text(
-                          "${state.data.weight}",
+                          "weight: ${state.data.weight}",
                           style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
                         Text(
-                          "${state.data.height}",
+                          "height: ${state.data.height}",
                           style: const TextStyle(
                             color: Colors.white,
                           ),

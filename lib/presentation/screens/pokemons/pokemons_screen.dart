@@ -51,106 +51,96 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
           } else if (state is PokemonScreenFailedState) {
             return const FailedWidget();
           } else if (state is PokemonScreenSuccessState) {
-            return GestureDetector(
-              onTap: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: SafeArea(
-                child: Scaffold(
-                  body: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Colors.blue,
-                          Colors.red,
-                        ],
-                      ),
+            return SafeArea(
+              child: Scaffold(
+                body: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Colors.blue,
+                        Colors.red,
+                      ],
                     ),
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(
-                            'List of pokemons',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: _controller,
-                            itemCount: state.data.itemList.length,
-                            itemBuilder: (_, index) => InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  InformationAboutPokemonScreen.routeName,
-                                  arguments: state.data.itemList[index].url,
-                                );
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 10,
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          state.data.itemList[index].name,
-                                          style: const TextStyle(
-                                            fontSize: 26,
-                                          ),
+                  ),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/pokemon_logo-removebg-preview.png',
+                        height: size.height * 0.2,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          controller: _controller,
+                          itemCount: state.data.itemList.length + 1,
+                          itemBuilder: (_, index) => index == 0
+                              ? Image.asset(
+                                  'assets/images/pokemons.png',
+                                  height: size.height * 0.3,
+                                )
+                              : InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      InformationAboutPokemonScreen.routeName,
+                                      arguments: state.data.itemList[index-1].url,
+                                    );
+                                  },
+                                  child: Card(
+                                    color: Colors.indigo.withOpacity(.3),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                      horizontal: 10,
+                                    ),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              state.data.itemList[index-1].name,
+                                              style: const TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          state.data.itemList[index].url,
-                                          style: const TextStyle(
-                                            fontSize: 26,
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
+                        ),
+                      ),
+                      if (state.data.isLoadMore == true)
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10, bottom: 40),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      if (state.data.isHasNext == false)
+                        Container(
+                          padding: const EdgeInsets.only(top: 30, bottom: 30),
+                          color: Colors.transparent,
+                          child: const Center(
+                            child: Text(
+                              'You have fetched all of the content',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         ),
-                        if (state.data.isLoadMore == true)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 40),
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        if (state.data.isHasNext == false)
-                          Container(
-                            padding: const EdgeInsets.only(top: 30, bottom: 30),
-                            color: Colors.transparent,
-                            child: const Center(
-                              child: Text(
-                                'You have fetched all of the content',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),
