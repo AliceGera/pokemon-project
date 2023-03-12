@@ -25,6 +25,7 @@ class _InformationAboutPokemonViewMapper implements InformationAboutPokemonViewM
     screenData.height = data.height ?? 0;
     screenData.weight = data.weight ?? 0;
     screenData.imagePokemon = data.image ?? '';
+    screenData.types = data.types ?? [];
   }
 
   @override

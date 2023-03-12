@@ -18,6 +18,7 @@ class InformationAboutPokemonScreenBloc extends Bloc<InformationAboutPokemonScre
     0,
     0,
     '',
+    []
   );
 
   InformationAboutPokemonScreenBloc(

@@ -4,7 +4,7 @@ class InformationAboutPokemonScreenData {
   int height;
   int weight;
   String imagePokemon;
-  //List<TypesOfPokemons> typesOfPokemons;
+  List<String> types;
 
   InformationAboutPokemonScreenData(
     this.url,
@@ -12,10 +12,6 @@ class InformationAboutPokemonScreenData {
     this.height,
     this.weight,
     this.imagePokemon,
-    //this.typesOfPokemons,
+    this.types,
   );
 }
-
-/*class TypesOfPokemons {
-
-}*/

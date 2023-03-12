@@ -75,42 +75,105 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                         ),
                         SizedBox(
                           height: size.height * 0.7,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Column(
-                              children: [
-                                CachedNetworkImage(
-                                  height: size.height * 0.3,
-                                  fit: BoxFit.fitHeight,
-                                  imageUrl: state.data.imagePokemon,
-                                  progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        value: downloadProgress.progress,
+                          child: Column(
+                            children: [
+                              CachedNetworkImage(
+                                height: size.height * 0.3,
+                                fit: BoxFit.fitHeight,
+                                imageUrl: state.data.imagePokemon,
+                                progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      value: downloadProgress.progress,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) => const Icon(
+                                  Icons.error,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      const Text(
+                                        'weight:',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        'assets/images/weights.png',
+                                        height: size.height * 0.2,
+                                      ),
+                                      Text(
+                                        '${state.data.weight}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 44,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      const Text(
+                                        'height:',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        'assets/images/height1.png',
+                                        height: size.height * 0.2,
+                                      ),
+                                      Text(
+                                        '${state.data.height}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 44,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Types',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.data.types.length ,
+                                    itemBuilder: (BuildContext context, int index) => Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        state.data.types[index],
+                                        style: const TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.green,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  errorWidget: (context, url, error) => const Icon(
-                                    Icons.error,
-                                  ),
                                 ),
-                                Text(
-                                  "weight: ${state.data.weight}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  "height: ${state.data.height}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
+                        /*SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -134,7 +197,7 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                               ),
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
