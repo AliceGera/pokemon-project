@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import '../../../domain/interactor/information_about_pokemon_interactor.dart';
 import 'bloc/information_about_pokemon_bloc.dart';
-import 'data/information_about_pokemon_screen_data.dart';
 import 'information_about_pokemon_view_mapper.dart';
 
 void initInformationAboutPokemonModule() {

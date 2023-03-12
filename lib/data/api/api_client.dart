@@ -1,18 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
-import '../model/no_internet_exception.dart';
-import 'api_exseption.dart';
+import 'package:flutter/foundation.dart';
+import '../model/exception/api_global_exception.dart';
+import '../model/exception/api_no_internet_exception.dart';
 
 enum HttpMethod { get, post, put, delete }
+
 class HttpRequestExecutor {
   final HttpClient client;
 
   HttpRequestExecutor(this.client);
+
   Future<Map<String, dynamic>> executeRequest(
-      HttpMethod method,
-      Uri uri,
-      Map<String, dynamic>? body,
-      ) async {
+    HttpMethod method,
+    Uri uri,
+    Map<String, dynamic>? body,
+  ) async {
     final HttpClientRequest request;
 
     try {
@@ -31,20 +34,21 @@ class HttpRequestExecutor {
           break;
       }
     } on SocketException catch (_) {
-      throw NoInternetException();
+      throw ApiNoInternetException();
     }
 
     request.headers
       ..contentType = ContentType.json
       ..set(HttpHeaders.acceptHeader, 'application/json');
-    print(
-        'HTTP here: --> ${request.method} ${request.uri.toString()} ${request.headers}');
-
-
+    if (kDebugMode) {
+      print('HTTP here: --> ${request.method} ${request.uri.toString()} ${request.headers}');
+    }
 
     if (body != null) {
       final json = jsonEncode(body);
-      print('HTTP: --> $json');
+      if (kDebugMode) {
+        print('HTTP: --> $json');
+      }
       request.write(json);
     }
 
@@ -54,35 +58,11 @@ class HttpRequestExecutor {
 
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       return map;
-    } else if (response.statusCode == 401 || response.statusCode == 403) {
-
-      return <String, dynamic>{};
     } else {
-      String? message;
-      final dynamic errors = map['errors'];
-      final detail = map['detail'] as String?;
-
-      switch (response.statusCode) {
-        case 500:
-          message = detail;
-          break;
-        case 404:
-          message = detail;
-          break;
-        case 422:
-          message = detail;
-          break;
-        default:
-          if (errors is Map<String, dynamic>) {
-            message = errors.values.first[0] as String?;
-          }
-          break;
+      final error = ApiGlobalException(message: response.statusCode.toString());
+      if (kDebugMode) {
+        print('HTTP: <-- $error)');
       }
-
-      final error = ApiException(message ?? '');
-
-      print('HTTP: <-- $error)');
-      print('HTTP: <-- $map)');
 
       throw error;
     }

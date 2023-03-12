@@ -38,7 +38,14 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
           if (state is InformationAboutPokemonScreenLoadingState || state is InformationAboutPokemonScreenInitialState) {
             return const CircularProgressIndicatorWidget();
           } else if (state is InformationAboutPokemonScreenFailedState) {
-            return const FailedWidget();
+            return FailedWidget(
+              tapCallBack: () {
+                BlocProvider.of<InformationAboutPokemonScreenBloc>(context).add(
+                  LoadInformationAboutPokemonScreenEvent(url ?? ''),
+                );
+              },
+              error: state.error,
+            );
           } else if (state is InformationAboutPokemonScreenSuccessState) {
             return SafeArea(
               child: Scaffold(
@@ -145,7 +152,7 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                                         ),
                                       ),
                                       Image.asset(
-                                        'assets/images/height1.png',
+                                        'assets/images/height.png',
                                         height: size.height * 0.2,
                                       ),
                                       Text(
@@ -178,7 +185,6 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                               ),
                               SizedBox(height: size.height * 0.01),
                               Container(
-                                //color: Colors.white.withOpacity(0.3),
                                 height: 40,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),

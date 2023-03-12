@@ -18,11 +18,6 @@ class PokemonsScreen extends StatefulWidget {
 class _PokemonsScreenState extends State<PokemonsScreen> {
   final ScrollController _controller = ScrollController();
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void setupScrollController(BuildContext context) {
     _controller.addListener(() {
       if (_controller.position.extentAfter < 300) {
@@ -49,7 +44,14 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
           if (state is PokemonScreenLoadingState || state is PokemonScreenInitialState) {
             return const CircularProgressIndicatorWidget();
           } else if (state is PokemonScreenFailedState) {
-            return const FailedWidget();
+            return FailedWidget(
+              tapCallBack: () {
+                BlocProvider.of<PokemonScreenBloc>(context).add(
+                  LoadMorePokemonsScreenEvent(true),
+                );
+              },
+              error: state.error,
+            );
           } else if (state is PokemonScreenSuccessState) {
             return SafeArea(
               child: Scaffold(
@@ -67,7 +69,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/pokemon_logo-removebg-preview.png',
+                        'assets/images/pokemon_logo.png',
                         height: size.height * 0.2,
                       ),
                       Expanded(
@@ -84,7 +86,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
                                     Navigator.pushNamed(
                                       context,
                                       InformationAboutPokemonScreen.routeName,
-                                      arguments: state.data.itemList[index-1].url,
+                                      arguments: state.data.itemList[index - 1].url,
                                     );
                                   },
                                   child: Card(
@@ -102,7 +104,7 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              state.data.itemList[index-1].name,
+                                              state.data.itemList[index - 1].name,
                                               style: const TextStyle(
                                                 fontSize: 30,
                                                 color: Colors.white,

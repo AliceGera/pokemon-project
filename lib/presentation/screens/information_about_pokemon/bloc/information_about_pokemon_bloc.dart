@@ -12,29 +12,26 @@ class InformationAboutPokemonScreenBloc extends Bloc<InformationAboutPokemonScre
   final InformationAboutPokemonInteractor interactor;
   final InformationAboutPokemonViewMapper viewMapper;
 
-  InformationAboutPokemonScreenData screenData = InformationAboutPokemonScreenData(
-    '',
-    '',
-    0,
-    0,
-    '',
-    []
-  );
+  InformationAboutPokemonScreenData screenData = InformationAboutPokemonScreenData('', '', 0, 0, '', []);
 
   InformationAboutPokemonScreenBloc(
     this.interactor,
     this.viewMapper,
   ) : super(InformationAboutPokemonScreenInitialState()) {
     on<LoadInformationAboutPokemonScreenEvent>((event, emit) async {
-      screenData.url = event.url;
-      final informationAboutPokemonData = viewMapper.toDomainModelData(screenData);
-      final data = await interactor.getInformationAboutPokemon(informationAboutPokemonData);
+      try {
+        screenData.url = event.url;
+        final informationAboutPokemonData = viewMapper.toDomainModelData(screenData);
+        final data = await interactor.getInformationAboutPokemon(informationAboutPokemonData);
 
-      viewMapper.toScreenData(
-        screenData,
-        data,
-      );
-      emit(InformationAboutPokemonScreenSuccessState(screenData));
+        viewMapper.toScreenData(
+          screenData,
+          data,
+        );
+        emit(InformationAboutPokemonScreenSuccessState(screenData));
+      } catch (error) {
+        emit(InformationAboutPokemonScreenFailedState(error));
+      }
     });
   }
 }

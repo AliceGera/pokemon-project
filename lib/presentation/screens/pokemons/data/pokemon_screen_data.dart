@@ -5,7 +5,6 @@ class PokemonScreenData {
   bool isHasNext;
   int limit;
 
-
   PokemonScreenData(
     this.itemList,
     this.offset, [

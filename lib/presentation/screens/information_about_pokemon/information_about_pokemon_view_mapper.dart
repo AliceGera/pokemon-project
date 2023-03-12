@@ -7,7 +7,6 @@ abstract class InformationAboutPokemonViewMapper {
   void toScreenData(
     InformationAboutPokemonScreenData screenData,
     InformationAboutPokemonData data,
-
   );
 
   InformationAboutPokemonData toDomainModelData(InformationAboutPokemonScreenData screenData);
@@ -18,9 +17,7 @@ class _InformationAboutPokemonViewMapper implements InformationAboutPokemonViewM
   void toScreenData(
     InformationAboutPokemonScreenData screenData,
     InformationAboutPokemonData data,
-
   ) {
-
     screenData.name = data.name ?? '';
     screenData.height = data.height ?? 0;
     screenData.weight = data.weight ?? 0;

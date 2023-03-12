@@ -1,7 +1,6 @@
 class ApiInformationAboutPokemonRequest {
   final String? url;
 
-
   ApiInformationAboutPokemonRequest({
     this.url,
   });
