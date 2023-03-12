@@ -26,7 +26,6 @@ class InformationAboutPokemonScreenBloc extends Bloc<InformationAboutPokemonScre
     this.viewMapper,
   ) : super(InformationAboutPokemonScreenInitialState()) {
     on<LoadInformationAboutPokemonScreenEvent>((event, emit) async {
-      await Future<void>.delayed(Duration(milliseconds: 500));
       screenData.url = event.url;
       final informationAboutPokemonData = viewMapper.toDomainModelData(screenData);
       final data = await interactor.getInformationAboutPokemon(informationAboutPokemonData);
@@ -34,7 +33,6 @@ class InformationAboutPokemonScreenBloc extends Bloc<InformationAboutPokemonScre
       viewMapper.toScreenData(
         screenData,
         data,
-
       );
       emit(InformationAboutPokemonScreenSuccessState(screenData));
     });

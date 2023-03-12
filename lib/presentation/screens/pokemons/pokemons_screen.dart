@@ -126,20 +126,6 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
                             ),
                           ),
                         ),
-                      if (state.data.isHasNext == false)
-                        Container(
-                          padding: const EdgeInsets.only(top: 30, bottom: 30),
-                          color: Colors.transparent,
-                          child: const Center(
-                            child: Text(
-                              'You have fetched all of the content',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
                     ],
                   ),
                 ),

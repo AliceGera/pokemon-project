@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class PokemonScreenData {
   List<PokemonScreenItem> itemList;
   int offset;

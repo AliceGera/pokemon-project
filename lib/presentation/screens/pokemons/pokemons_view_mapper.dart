@@ -28,14 +28,13 @@ class _PokemonViewMapper implements PokemonViewMapper {
           ),
         )
         .toList();
-    /*screenData.itemList = pokemonList ?? [];*/
-    if ((pokemonList?.length ?? 0) >= 20) {
+    if ((pokemonList?.length ?? 0) >= screenData.limit) {
       screenData.isHasNext = true;
       if (isFirstLoading) {
         screenData.itemList = pokemonList ?? [];
-        screenData.offset = 20;
+        screenData.offset = screenData.limit;
       } else {
-        screenData.offset += 20;
+        screenData.offset += screenData.limit;
         screenData.itemList += pokemonList ?? [];
       }
     } else {
