@@ -58,7 +58,7 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        SizedBox(height: size.height * 0.05),
+                        SizedBox(height: size.height * 0.04),
                         const Text(
                           "The pokemon",
                           style: TextStyle(
@@ -78,7 +78,7 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                           child: Column(
                             children: [
                               CachedNetworkImage(
-                                height: size.height * 0.3,
+                                height: size.height * 0.25,
                                 fit: BoxFit.fitHeight,
                                 imageUrl: state.data.imagePokemon,
                                 progressIndicatorBuilder: (context, url, downloadProgress) => SizedBox(
@@ -97,11 +97,20 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                                 children: [
                                   Column(
                                     children: [
-                                      const Text(
-                                        'weight:',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24,
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(25),
+                                          color: Colors.white.withOpacity(0.3),
+                                        ),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'weight:',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 24,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Image.asset(
@@ -119,11 +128,20 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                                   ),
                                   Column(
                                     children: [
-                                      const Text(
-                                        'height:',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24,
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(25),
+                                          color: Colors.white.withOpacity(0.3),
+                                        ),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'height:',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 24,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Image.asset(
@@ -141,25 +159,42 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                                   ),
                                 ],
                               ),
-                              const Text(
-                                'Types',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.green,
+                              const SizedBox(
+                                height: 50,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 25,
+                                    vertical: 8,
+                                  ),
+                                  child: Text(
+                                    'Types:',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 30,
+                              SizedBox(height: size.height * 0.01),
+                              Container(
+                                //color: Colors.white.withOpacity(0.3),
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
                                 child: Center(
                                   child: ListView.builder(
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: state.data.types.length ,
+                                    itemCount: state.data.types.length,
                                     itemBuilder: (BuildContext context, int index) => Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: Text(
-                                        state.data.types[index],
+                                        (state.data.types.length > 1 && index != state.data.types.length - 1)
+                                            ? "${state.data.types[index]},"
+                                            : state.data.types[index],
                                         style: const TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w600,
@@ -173,7 +208,7 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                             ],
                           ),
                         ),
-                        /*SizedBox(
+                        SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -190,14 +225,14 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
                               child: Text(
                                 'Back',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
-                        ),*/
+                        ),
                       ],
                     ),
                   ),
