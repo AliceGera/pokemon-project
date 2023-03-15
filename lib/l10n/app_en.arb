@@ -1,1 +1,6 @@
-{}
+{
+  "height": "height:",
+  "weight": "weight:",
+  "pokemon": "The pokemon",
+  "types": "Types:"
+}
