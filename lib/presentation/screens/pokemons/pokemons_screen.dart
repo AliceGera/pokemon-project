@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pokemon_project/presentation/screens/pokemons/pokemon_view_mapper.dart';
+import '../../../domain/interactor/pokemon_interactor.dart';
 import '../../widget/failed_widget.dart';
 import '../information_about_pokemon/information_about_pokemon_screen.dart';
 import 'bloc/pokemon_screen_bloc.dart';
@@ -32,8 +34,10 @@ class _PokemonsScreenState extends State<PokemonsScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => GetIt.I.get<PokemonScreenBloc>()
-        ..add(
+      create: (context) => PokemonScreenBloc(
+        GetIt.I.get<PokemonInteractor>(),
+        GetIt.I.get<PokemonViewMapper>(),
+      )..add(
           LoadMorePokemonsScreenEvent(true),
         ),
       child: BlocBuilder<PokemonScreenBloc, PokemonScreenState>(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../../domain/interactor/information_about_pokemon_interactor.dart';
 import '../../widget/circular_progress_indicator_widget.dart';
 import '../../widget/failed_widget.dart';
 import 'bloc/information_about_pokemon_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
+import 'information_about_pokemon_view_mapper.dart';
 
 class InformationAboutPokemonScreen extends StatefulWidget {
   static const routeName = '/information_about_pokemon';
@@ -29,8 +32,10 @@ class _InformationAboutPokemonScreenState extends State<InformationAboutPokemonS
     final size = MediaQuery.of(context).size;
     url = ModalRoute.of(context)?.settings.arguments as String?;
     return BlocProvider(
-      create: (context) => GetIt.I.get<InformationAboutPokemonScreenBloc>()
-        ..add(
+      create: (context) => InformationAboutPokemonScreenBloc(
+        GetIt.I.get<InformationAboutPokemonInteractor>(),
+        GetIt.I.get<InformationAboutPokemonViewMapper>(),
+      )..add(
           LoadInformationAboutPokemonScreenEvent(url ?? ''),
         ),
       child: BlocBuilder<InformationAboutPokemonScreenBloc, InformationAboutPokemonScreenState>(
